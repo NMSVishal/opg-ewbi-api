@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
+	. "github.com/nbycomp/neonephos-opg-ewbi-api/api/federation/models"
 	"github.com/oapi-codegen/runtime"
 )
 
