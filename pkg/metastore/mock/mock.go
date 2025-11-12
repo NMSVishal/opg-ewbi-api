@@ -3,7 +3,7 @@ package mock
 import (
 	"context"
 
-	"github.com/neonephos-katalis/opg-ewbi-api/pkg/metastore"
+	"github.com/NMSVishal/opg-ewbi-api/pkg/metastore"
 )
 
 // Mock MetaStoreClient
