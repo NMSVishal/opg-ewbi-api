@@ -3,8 +3,8 @@ package metastore
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
-	opgv1beta1 "github.com/nbycomp/neonephos-opg-ewbi-operator/api/v1beta1"
+	"github.com/NMSVishal/opg-ewbi-api/api/federation/models"
+	opgv1beta1 "github.com/NMSVishal/opg-ewbi-operator/api/v1beta1"
 )
 
 type Federation struct {
@@ -44,9 +44,18 @@ func (f *Federation) updatek8sCustomResource(fed *opgv1beta1.Federation) *opgv1b
 }
 
 func federationFromK8sCustomResource(fed *opgv1beta1.Federation) (*Federation, error) {
-	offeredZones := make([]models.ZoneDetails, len(fed.Spec.OfferedAvailabilityZones))
-	for i, z := range fed.Spec.OfferedAvailabilityZones {
-		offeredZones[i].ZoneId = z
+	// offeredZones := make([]models.ZoneDetails, len(fed.Spec.OfferedAvailabilityZones))
+	// for i, z := range fed.Spec.OfferedAvailabilityZones {
+	// 	offeredZones[i].ZoneId = z.ZoneId
+	// }
+	offeredZones := []models.ZoneDetails{}
+	// map fed.spec.offeredAvailabilityZones to offeredZones ,both have same data typeas ZoneDetails
+	for _, z := range fed.Spec.OfferedAvailabilityZones {
+		offeredZones = append(offeredZones, models.ZoneDetails{
+			ZoneId:           z.ZoneId,
+			Geolocation:      z.Geolocation,
+			GeographyDetails: z.GeographyDetails,
+		})
 	}
 
 	return &Federation{
