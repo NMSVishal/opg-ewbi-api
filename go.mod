@@ -1,4 +1,4 @@
-module github.com/NMSVishal/opg-ewbi-api
+module github.com/neonephos-katalis/opg-ewbi-api
 
 go 1.24.6
 
@@ -8,7 +8,7 @@ replace (
 )
 
 require (
-	github.com/NMSVishal/opg-ewbi-operator v0.0.0-20251114065741-7d2c033dfac2
+	github.com/neonephos-katalis/opg-ewbi-operator v0.0.0-20251114065741-7d2c033dfac2
 	github.com/deepmap/oapi-codegen v1.12.4
 	github.com/getkin/kin-openapi v0.112.0
 	github.com/google/uuid v1.6.0
