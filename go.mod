@@ -5,10 +5,10 @@ go 1.24.6
 replace (
 	github.com/lestrrat-go/iter => github.com/lestrrat-go/iter v0.0.0-20200422075355-fc1769541911
 	github.com/lestrrat-go/jwx => github.com/lestrrat-go/jwx v1.0.5
-	//github.com/NMSVishal/opg-ewbi-operator => github.com/NMSVishal/opg-ewbi-operator v0.0.0-20251113085438-93cff8769cbc
 )
 
 require (
+	github.com/NMSVishal/opg-ewbi-operator v0.0.0-20251114065741-7d2c033dfac2
 	github.com/deepmap/oapi-codegen v1.12.4
 	github.com/getkin/kin-openapi v0.112.0
 	github.com/google/uuid v1.6.0
@@ -16,7 +16,6 @@ require (
 	github.com/icza/gog v0.0.0-20241010132004-5da24f18211d
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/labstack/echo/v4 v4.11.4
-	github.com/NMSVishal/opg-ewbi-operator v0.0.0-20251113085438-93cff8769cbc
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.3
