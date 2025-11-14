@@ -5,7 +5,7 @@ go 1.24.6
 replace (
 	github.com/lestrrat-go/iter => github.com/lestrrat-go/iter v0.0.0-20200422075355-fc1769541911
 	github.com/lestrrat-go/jwx => github.com/lestrrat-go/jwx v1.0.5
-//github.com/NMSVishal/opg-ewbi-operator => github.com/NMSVishal/opg-ewbi-operator v0.0.0-20251113085438-93cff8769cbc
+	//github.com/NMSVishal/opg-ewbi-operator => github.com/NMSVishal/opg-ewbi-operator v0.0.0-20251113085438-93cff8769cbc
 )
 
 require (
