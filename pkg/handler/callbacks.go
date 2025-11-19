@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
+	"github.com/NMSVishal/opg-ewbi-api/api/federation/models"
 )
 
 // Notification payload.

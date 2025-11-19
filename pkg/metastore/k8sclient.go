@@ -11,8 +11,8 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	k8scli "sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
-	opgv1beta1 "github.com/neonephos-katalis/opg-ewbi-operator/api/v1beta1"
+	"github.com/NMSVishal/opg-ewbi-api/api/federation/models"
+	opgv1beta1 "github.com/NMSVishal/opg-ewbi-operator/api/v1beta1"
 )
 
 type k8sClient struct {
@@ -101,6 +101,19 @@ func (c *k8sClient) GetApplication(ctx context.Context, federationContextID, id 
 		return nil, missMatchErr("application", id, federationContextID, &opgv1beta1.Application{}, app)
 	}
 	return applicationFromK8sCustomResource(*res)
+}
+
+func (c *k8sClient) GetApplicationInstanceDetails(ctx context.Context, federationContextID, id string) (*ApplicationInstanceDetails, error) {
+	appIns, err := c.getKubernetesObject(id, &opgv1beta1.ApplicationInstanceList{}, federationContextID)
+	if err != nil {
+		return nil, err
+	}
+	res, ok := appIns.(*opgv1beta1.ApplicationInstance)
+	if !ok {
+		return nil, missMatchErr("application instance", id, federationContextID, &opgv1beta1.ApplicationInstance{}, appIns)
+	}
+	// call appinstance.newApplicationInstanceDetailsFromK8sCR and return the response
+	return newApplicationInstanceDetailsFromK8sCR(res), nil
 }
 
 func (c *k8sClient) GetArtefact(ctx context.Context, federationContextID, id string) (*Artefact, error) {

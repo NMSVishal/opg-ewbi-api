@@ -1,14 +1,15 @@
-module github.com/neonephos-katalis/opg-ewbi-api
+module github.com/NMSVishal/opg-ewbi-api
 
 go 1.24.6
 
 replace (
 	github.com/lestrrat-go/iter => github.com/lestrrat-go/iter v0.0.0-20200422075355-fc1769541911
 	github.com/lestrrat-go/jwx => github.com/lestrrat-go/jwx v1.0.5
+//	github.com/neonephos-katalis/opg-ewbi-operator => /home/vishal/operator-neonphos-katalis/opg-ewbi-operator
 )
 
 require (
-	github.com/neonephos-katalis/opg-ewbi-operator v0.0.0-20251114065741-7d2c033dfac2
+	github.com/NMSVishal/opg-ewbi-operator v0.0.0-20251119115853-ea481234bcf6
 	github.com/deepmap/oapi-codegen v1.12.4
 	github.com/getkin/kin-openapi v0.112.0
 	github.com/google/uuid v1.6.0

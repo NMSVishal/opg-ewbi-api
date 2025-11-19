@@ -8,9 +8,9 @@ import (
 
 	"github.com/icza/gog"
 
-	"github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
-	camara "github.com/neonephos-katalis/opg-ewbi-api/api/federation/server"
-	opgv1beta1 "github.com/neonephos-katalis/opg-ewbi-operator/api/v1beta1"
+	"github.com/NMSVishal/opg-ewbi-api/api/federation/models"
+	camara "github.com/NMSVishal/opg-ewbi-api/api/federation/server"
+	opgv1beta1 "github.com/NMSVishal/opg-ewbi-operator/api/v1beta1"
 )
 
 type Application struct {

@@ -5,9 +5,9 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
-	camara "github.com/neonephos-katalis/opg-ewbi-api/api/federation/server"
-	opgv1beta1 "github.com/neonephos-katalis/opg-ewbi-operator/api/v1beta1"
+	"github.com/NMSVishal/opg-ewbi-api/api/federation/models"
+	camara "github.com/NMSVishal/opg-ewbi-api/api/federation/server"
+	opgv1beta1 "github.com/NMSVishal/opg-ewbi-operator/api/v1beta1"
 )
 
 type ApplicationInstanceDetails struct {
@@ -17,6 +17,17 @@ type ApplicationInstanceDetails struct {
 type ApplicationInstance struct {
 	*models.InstallAppJSONBody
 	FederationContextId models.FederationContextId `json:"-"`
+}
+
+// create fun for GetAppInstanceDetails200JSONResponse
+func newApplicationInstanceDetailsFromK8sCR(obj *opgv1beta1.ApplicationInstance) *ApplicationInstanceDetails {
+	// fetch exisiting application instance k8s object using  k8sobject getKubernetesObject and return ApplicationInstanceDetails
+	return &ApplicationInstanceDetails{
+		GetAppInstanceDetails200JSONResponse: &camara.GetAppInstanceDetails200JSONResponse{
+			AppInstanceState: (*models.InstanceState)(&obj.Status.State),
+			AccesspointInfo:  convertAccessPoint(obj.Status.AccessPointInfo),
+		},
+	}
 }
 
 func (d *ApplicationInstance) k8sCustomResource(namespace string, opts ...Opt) (*opgv1beta1.ApplicationInstance, error) {
@@ -62,4 +73,19 @@ func isValidApplicationInstanceStatus(status string) bool {
 
 func k8sCustomResourceNameFromApplicationInstance(federationContextID, appID string) string {
 	return fmt.Sprintf("%s-%s", applicationInstancePrefix, uuidV5Fn(federationContextID+"/"+appID))
+}
+
+func convertAccessPoint(opgAccessPoint opgv1beta1.AccessPointInfo) *models.AccessPointInfo {
+	// Map opgv1beta1.AccessPointInfo to models.AccessPointInfo
+	return &models.AccessPointInfo{
+		{
+			AccessPoints: models.ServiceEndpoint{
+				Port:          opgAccessPoint.AccessPoint.Port,
+				Fqdn:          &opgAccessPoint.AccessPoint.Fqdn,
+				Ipv4Addresses: &[]models.Ipv4Addr{models.Ipv4Addr(opgAccessPoint.AccessPoint.Ipv4Addresses)},
+				Ipv6Addresses: &[]models.Ipv6Addr{models.Ipv6Addr(opgAccessPoint.AccessPoint.Ipv6Addresses)},
+			},
+			InterfaceId: models.InterfaceId(opgAccessPoint.InterfaceId),
+		},
+	}
 }
