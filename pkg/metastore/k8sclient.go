@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/iancoleman/strcase"
+	"github.com/labstack/gommon/log"
 	"github.com/pkg/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
@@ -11,8 +12,8 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	k8scli "sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/NMSVishal/opg-ewbi-api/api/federation/models"
-	opgv1beta1 "github.com/NMSVishal/opg-ewbi-operator/api/v1beta1"
+	"github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
+	opgv1beta1 "github.com/neonephos-katalis/opg-ewbi-operator/api/v1beta1"
 )
 
 type k8sClient struct {
@@ -25,17 +26,21 @@ func NewK8sClient(c k8scli.Client, namespace string) *k8sClient {
 }
 
 func (c *k8sClient) AddApplicationInstance(ctx context.Context, dep *ApplicationInstance) error {
+	log.Infof("####Adding application instance %s to federation %s", dep.AppInstanceId, dep.FederationContextId)
 	if _, err := c.GetApplication(ctx, dep.FederationContextId, dep.AppId); err != nil {
 		if IsNotFoundError(err) {
+			log.Info("####Application not found")
 			return errors.Wrap(ErrBadRequest, err.Error())
 		}
 	}
 	opt, err := c.buildOwnerReferenceOption(dep.FederationContextId)
 	if err != nil {
+		log.Info("####Error building owner reference option")
 		return err
 	}
 	obj, err := dep.k8sCustomResource(c.getNamespace(), opt)
 	if err != nil {
+		log.Info("####Error building k8s custom resource")
 		return err
 	}
 	return c.createK8sObject(obj)
@@ -104,12 +109,15 @@ func (c *k8sClient) GetApplication(ctx context.Context, federationContextID, id 
 }
 
 func (c *k8sClient) GetApplicationInstanceDetails(ctx context.Context, federationContextID, id string) (*ApplicationInstanceDetails, error) {
+	log.Infof("####Getting application instance details for %s in federation %s", id, federationContextID)
 	appIns, err := c.getKubernetesObject(id, &opgv1beta1.ApplicationInstanceList{}, federationContextID)
 	if err != nil {
+		log.Infof("####Error getting k8s object: %v", err)
 		return nil, err
 	}
 	res, ok := appIns.(*opgv1beta1.ApplicationInstance)
 	if !ok {
+		log.Info("####Type assertion failed")
 		return nil, missMatchErr("application instance", id, federationContextID, &opgv1beta1.ApplicationInstance{}, appIns)
 	}
 	// call appinstance.newApplicationInstanceDetailsFromK8sCR and return the response

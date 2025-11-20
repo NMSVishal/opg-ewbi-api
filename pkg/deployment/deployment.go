@@ -1,7 +1,7 @@
 package deployment
 
 import (
-	"github.com/NMSVishal/opg-ewbi-api/api/federation/models"
+	"github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
 )
 
 type InstallDeployment struct {
