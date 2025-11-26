@@ -6,5 +6,8 @@
         99
     ],
     "go.testTimeout": "20m",
-    "go.formatTool": "goimports"
+    "go.formatTool": "goimports",
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
+    ]
 }

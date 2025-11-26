@@ -100,12 +100,19 @@ func (h *handler) RemoveApp(c echo.Context, federationContextId models.Federatio
 // Retrieves an application instance details from partner OP.
 // (GET /{federationContextId}/application/lcm/app/{appId}/instance/{appInstanceId}/zone/{zoneId})
 func (h *handler) GetAppInstanceDetails(c echo.Context, federationContextId models.FederationContextId, appId models.AppIdentifier, appInstanceId models.InstanceIdentifier, zoneId models.ZoneIdentifier) error {
+	fmt.Printf("GetAppInstanceDetails called with federationContextId: %s, appId: %s, appInstanceId: %s, zoneId: %s\n", federationContextId, appId, appInstanceId, zoneId)
 	appInst, err := h.metaStoreClient.GetApplicationInstanceDetails(h.getRequestContextFunc(c), federationContextId, appInstanceId)
 	if err != nil {
 		return sendErrorResponseFromError(c, err)
 	}
+	fmt.Printf("Retrieved ApplicationInstanceDetails: %+v\n", appInst)
 
-	return c.JSON(http.StatusOK, appInst.GetAppInstanceDetails200JSONResponse)
+	res := c.JSON(http.StatusOK, appInst.GetAppInstanceDetails200JSONResponse)
+	// log complete response ,all attributes
+	fmt.Printf("Response being sent: %+v\n", res)
+	return res
+	//print res. if json parsing has error then try other way to parse it
+
 }
 
 // Submits an application details to a partner OP. Based on the details provided,  partner OP shall do bookkeeping, resource validation and other pre-deployment operations.

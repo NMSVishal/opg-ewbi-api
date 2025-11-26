@@ -11,8 +11,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/labstack/echo/v4"
 	. "github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
+	"github.com/labstack/echo/v4"
 	"github.com/oapi-codegen/runtime"
 	strictecho "github.com/oapi-codegen/runtime/strictmiddleware/echo"
 )
@@ -2106,6 +2106,7 @@ type GetAppInstanceDetails200JSONResponse struct {
 }
 
 func (response GetAppInstanceDetails200JSONResponse) VisitGetAppInstanceDetailsResponse(w http.ResponseWriter) error {
+	fmt.Printf("server.gen.go VisitGetAppInstanceDetailsResponse::GetAppInstanceDetails200JSONResponse: %+v\n", response)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
 
@@ -3291,7 +3292,7 @@ type GetArtefact200JSONResponse struct {
 	ArtefactRepoLocation *ObjectRepoLocation `json:"artefactRepoLocation,omitempty"`
 
 	// ArtefactVersionInfo Artefact version information
-	ArtefactVersionInfo string                                     `json:"artefactVersionInfo"`
+	ArtefactVersionInfo string                                      `json:"artefactVersionInfo"`
 	ArtefactVirtType    UploadArtefactMultipartBodyArtefactVirtType `json:"artefactVirtType"`
 
 	// ComponentSpec Details about compute, networking and storage requirements for each component of the application. App provider should define all information needed to instantiate the component. If artefact is being defined at component level this section should have information just about the component. In case the artefact is being defined at application level the section should provide details about all the components.

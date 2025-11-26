@@ -8,6 +8,7 @@ import (
 	"github.com/neonephos-katalis/opg-ewbi-api/api/federation/models"
 	camara "github.com/neonephos-katalis/opg-ewbi-api/api/federation/server"
 	opgv1beta1 "github.com/neonephos-katalis/opg-ewbi-operator/api/v1beta1"
+	"github.com/labstack/gommon/log"
 )
 
 type ApplicationInstanceDetails struct {
@@ -22,12 +23,21 @@ type ApplicationInstance struct {
 // create fun for GetAppInstanceDetails200JSONResponse
 func newApplicationInstanceDetailsFromK8sCR(obj *opgv1beta1.ApplicationInstance) *ApplicationInstanceDetails {
 	// fetch exisiting application instance k8s object using  k8sobject getKubernetesObject and return ApplicationInstanceDetails
-	return &ApplicationInstanceDetails{
+	appinst := &ApplicationInstanceDetails{
 		GetAppInstanceDetails200JSONResponse: &camara.GetAppInstanceDetails200JSONResponse{
 			AppInstanceState: (*models.InstanceState)(&obj.Status.State),
 			AccesspointInfo:  convertAccessPoint(obj.Status.AccessPointInfo),
 		},
 	}
+
+	log.Info("Converted ApplicationInstanceDetails from K8s CR successfully")
+	log.Info(fmt.Sprintf("%+v", appinst))
+	log.Info("AccessPointInfo:")
+	log.Info(fmt.Sprintf("%+v", appinst.AccesspointInfo))
+	log.Info("AppInstanceState:")
+	log.Info(fmt.Sprintf("%+v", appinst.AppInstanceState))
+
+	return appinst
 }
 
 func (d *ApplicationInstance) k8sCustomResource(namespace string, opts ...Opt) (*opgv1beta1.ApplicationInstance, error) {
@@ -77,6 +87,7 @@ func k8sCustomResourceNameFromApplicationInstance(federationContextID, appID str
 
 func convertAccessPoint(opgAccessPoint opgv1beta1.AccessPointInfo) *models.AccessPointInfo {
 	// Map opgv1beta1.AccessPointInfo to models.AccessPointInfo
+	log.Info("Converting AccessPointInfo")
 	return &models.AccessPointInfo{
 		{
 			AccessPoints: models.ServiceEndpoint{

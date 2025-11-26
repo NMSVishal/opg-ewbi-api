@@ -5,7 +5,6 @@ go 1.24.6
 replace (
 	github.com/lestrrat-go/iter => github.com/lestrrat-go/iter v0.0.0-20200422075355-fc1769541911
 	github.com/lestrrat-go/jwx => github.com/lestrrat-go/jwx v1.0.5
-//	github.com/neonephos-katalis/opg-ewbi-operator => /home/vishal/operator-neonphos-katalis/opg-ewbi-operator
 )
 
 require (
@@ -17,6 +16,7 @@ require (
 	github.com/icza/gog v0.0.0-20241010132004-5da24f18211d
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/labstack/echo/v4 v4.11.4
+	github.com/labstack/gommon v0.4.2
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.3
@@ -49,7 +49,6 @@ require (
 	github.com/invopop/yaml v0.1.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
